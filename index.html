@@ -13,26 +13,25 @@
 <script>
   if('serviceWorker' in navigator){
     navigator.serviceWorker.register('pwa/sw.js').catch(()=>{});
-    navigator.serviceWorker.addEventListener('controllerchange',()=>{
-      try{localStorage.setItem('awake_updated','1')}catch(x){}
-    });
   }
 </script>
 <style>
-:root{--pg:#f7f5f2;--tx:#1a1a1a;--chip:#fff;--chipb:#e5e3df;--sub:#666;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{--pg:#e9ebe4;--tx:#1a1a1a;--chip:#fff;--chipb:#d5d8cf;--sub:#4a4d46;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--pg:#16181a;--tx:#eee;--chip:#26292c;--chipb:#3a3e42;--sub:#b0b2ab}}
+:root[data-theme="dark"]{--pg:#16181a;--tx:#eee;--chip:#26292c;--chipb:#3a3e42;--sub:#b0b2ab}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0}
-body{background:#fff;color:var(--tx);font-family:'Plus Jakarta Sans',system-ui,sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:14px 8px 20px}
+body{background:var(--pg);color:var(--tx);font-family:'Plus Jakarta Sans',system-ui,sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:14px 8px 20px}
 .tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;justify-content:center}
 .tabs button{font:600 12px 'Plus Jakarta Sans',sans-serif;padding:7px 14px;border-radius:99px;border:1px solid var(--chipb);background:var(--chip);color:var(--tx);cursor:pointer}
 .tabs button.on{background:#dc1f26;border-color:#dc1f26;color:#fff}
 .holder{width:360px}
-.phone{width:360px;height:740px;background:#f7f5f2;border-radius:52px;padding:8px;transform-origin:top left;box-shadow:0 8px 30px rgba(0,0,0,.12)}
-.scr{position:relative;width:344px;height:724px;border-radius:44px;overflow:hidden;background:#fff;color:#1a1a1a;color-scheme:light;--red:#dc1f26}
+.phone{width:360px;height:740px;background:#0c0c0c;border-radius:52px;padding:8px;transform-origin:top left;box-shadow:0 8px 30px rgba(0,0,0,.12)}
+.scr{position:relative;width:344px;height:724px;border-radius:44px;overflow:hidden;background:#eef0e8;color:#1a1a1a;color-scheme:light;--red:#dc1f26}
 .island{display:none}
 .sb{display:none}
 .sb span{display:flex;gap:5px;align-items:center}
-.home{position:absolute;bottom:7px;left:50%;margin-left:-60px;width:120px;height:4px;border-radius:3px;background:#ccc;z-index:70;pointer-events:none}
+.home{position:absolute;bottom:7px;left:50%;margin-left:-60px;width:120px;height:4px;border-radius:3px;background:#111;z-index:70;pointer-events:none}
 .s{position:absolute;inset:0;display:none}
 .s.on{display:block}
 .btn{width:32px;height:32px;border-radius:50%;background:#fff;border:1px solid #e3e5dc;display:grid;place-items:center;cursor:pointer;padding:0;flex:none}
@@ -117,7 +116,7 @@ body{background:#fff;color:var(--tx);font-family:'Plus Jakarta Sans',system-ui,s
 .bdt{display:flex;flex-direction:row;justify-content:center;align-items:center;gap:5px;margin-top:11px}.bdt i{display:block;width:6px;height:6px;border-radius:3px;background:#c9ccc3}.bdt i.a{width:20px;background:var(--red)}
 .cats{display:flex;justify-content:space-between;padding:0 21px;margin-top:22px}
 .cat{display:flex;flex-direction:column;align-items:center;gap:9px;font-size:11px;font-weight:500;cursor:pointer}
-.cat span{width:44px;height:44px;border-radius:14px;background:#fff3f4;display:grid;place-items:center}.cat svg{width:22px;height:22px;fill:#dc1f26}
+.cat span{width:44px;height:44px;border-radius:14px;background:#fff;display:grid;place-items:center}.cat svg{width:22px;height:22px;fill:var(--red)}
 .od{display:none;position:relative;margin:30px 16px 0;height:78px;border-radius:22px;background:#111518;border:1.5px solid #ff2a2f;box-shadow:0 0 14px rgba(255,40,45,.55),inset 0 0 12px rgba(255,40,45,.25);align-items:center;padding:0 16px;gap:14px;color:#fff}
 .order .od{display:flex}
 .od .tg{position:absolute;left:12px;top:-11px;background:#e11d25;border-radius:9px;font-size:11px;font-weight:700;padding:3px 11px;box-shadow:0 2px 6px rgba(0,0,0,.3)}
@@ -430,33 +429,25 @@ const D="Produk sembako kualitas terbaik untuk kebutuhan dapur Anda.",D2="Bahan 
 Object.assign(IMG,{mie:IMG.sand,minyak:IMG.croi,gula:IMG.banana});
 const STR='<svg class="star" viewBox="0 0 24 24"><path d="M12 2l3 6.500 7 .8-5.200 4.800 1.400 7L12 17.500 5.800 21l1.400-7L2 9.300l7-.8z"/></svg>';
 const P={
-beras:[["Beras Premium 5kg",72000,"red",D,4.5],["Beras Pandan Wangi 5kg",85000,"green","Beras pandan wangi pulen, cocok untuk nasi harian.",4.0],["Beras Merah Organik 2kg",42000,"yellow","Beras merah organik, sehat dan rendah glikemik.",4.8],["Beras Jasmine 5kg",95000,"blue","Beras jasmine premium, harum dan lembut.",4.6],["Beras Ramos 5kg",68000,"cap","Beras lokal pilihan, hemat untuk keluarga besar.",4.2],["Beras Rojolele 5kg",78000,"red","Beras rojolele asli, pulen dan wangi.",4.7],["Beras Mentik 2kg",52000,"green","Beras mentik organik dari petani lokal.",4.5]],
-minyak:[["Minyak Goreng Kelapa Sawit 1L",18000,"minyak","Minyak goreng kelapa sawit jernih, ideal untuk sehari-hari.",4.8],["Minyak Kelapa Murni 500ml",28000,"minyak","Minyak kelapa organik virgin untuk masakan sehat.",4.7],["Minyak Bimoli 2L",35000,"minyak","Minyak goreng premium, bebas kolesterol dan praktis.",4.9],["Minyak Fortune 2L",33000,"minyak","Minyak goreng Fortune ekonomis untuk gorengan.",4.6],["Minyak Goreng 5L",85000,"minyak","Kemasan besar hemat untuk usaha kuliner.",4.8],["Minyak Wijen 250ml",24000,"minyak","Minyak wijen murni untuk tumisan dan bumbu.",4.5]],
-bumbu:[["Tepung Terigu Segitiga Biru 1kg",12500,"tgreen","Tepung terigu serbaguna untuk kue dan roti.",4.7],["Garam Dapur Beryodium 500g",6000,"tblack","Garam beryodium halus untuk masakan sehari-hari.",4.0],["Merica Bubuk 100g",8500,"tblack","Merica hitam murni tanpa campuran.",4.6],["Kecap Manis ABC 275ml",12000,"tblack","Kecap manis legendaris, pas untuk sate dan tumisan.",4.9],["Saus Sambal ABC 275ml",11000,"tblack","Saus sambal pedas manis favorit keluarga.",4.7],["Tepung Beras Rose Brand 500g",14000,"tgreen","Tepung beras untuk kue basah dan kolak.",4.5],["Bubuk Kunyit 100g",5000,"tblack","Kunyit bubuk alami untuk bumbu dan kesehatan.",4.4]],
-mie:[["Mie Instan Rasa Ayam Bawang",3500,"mie","Mie instan klasik rasa ayam bawang yang gurih.",4.0],["Mie Instan Goreng",3600,"mie","Mie goreng dengan bumbu kecap dan sambal.",5.0],["Mie Instan Soto",3500,"mie","Mie kuah rasa soto tradisional yang segar.",4.8],["Mie Instan Kari Ayam",3500,"mie","Mie kuah kari ayam dengan rempah khas.",4.7],["Mie Instan Dus 40 pcs",92000,"mie","Dus mie instan campur, hemat untuk stok bulanan.",4.9],["Mie Telor 200g",6500,"mie","Mie telor kenyal untuk bakmi dan mie kuah homemade.",4.6]],
-paket:[["Paket Sembako A",125000,"mug","Beras 5kg, minyak 1L, gula 1kg, dan telur 1kg.",4.0],["Paket Sembako B",250000,"padel","Beras 10kg, minyak 2L, gula 2kg, telur 2kg, dan mie instan.",4.0],["Paket Sembako C",385000,"mug","Beras 20kg, minyak 3L, gula 3kg, telur 3kg, bumbu dasar lengkap.",4.0],["Paket Keluarga Hemat",180000,"padel","Beras 10kg, minyak 1L, gula 1kg, mie instan 1 dus, dan kecap.",4.2]],
-nonc:[["Gula Pasir Premium 1kg",15000,"gula","Gula pasir halus premium untuk masak dan minum.",4.5],["Gula Jawa 500g",10000,"gula","Gula asli kelapa untuk bumbu tradisional dan kopi.",4.6],["Garam Dapur Beryodium 500g",6000,"tblack","Garam beryodium halus.",4.0],["Minyak Goreng Kelapa Sawit 1L",18000,"minyak","Minyak goreng jernih untuk gorengan.",4.8]]};
-const SNK=[["Mie Instan Ayam",3500,"mie","Mie instan rasa ayam bawang, praktis untuk stok dapur.",4.0],["Mie Instan Goreng",3600,"mie","Mie instan goreng dengan bumbu spesial, favorit keluarga.",5.0],["Minyak Goreng 1L",18000,"minyak","Minyak goreng kelapa sawit jernih untuk masak sehari-hari.",4.0],["Gula Pasir 1kg",15000,"gula","Gula pasir halus untuk masak dan minum.",4.5],["Tepung Terigu 1kg",12500,"tgreen","Tepung terigu serbaguna untuk kue dan roti.",4.7],["Kecap Manis ABC 275ml",12000,"tblack","Kecap manis legendaris, pas untuk sate dan tumisan.",4.9]];
-const MER=[["Paket Sembako A",125000,"mug","Beras 5kg, minyak 1L, gula 1kg, dan telur 1kg dalam satu paket.",4.0],["Paket Sembako B",250000,"padel","Beras 10kg, minyak 2L, gula 2kg, telur 2kg, dan mie instan.",4.0],["Paket Sembako C",385000,"mug","Beras 20kg, minyak 3L, gula 3kg, telur 3kg, bumbu dasar lengkap.",4.0],["Paket Keluarga Hemat",180000,"padel","Beras 10kg, minyak 1L, gula 1kg, mie instan 1 dus, dan kecap.",4.2]];
+beras:[["Beras Premium 5kg",72000,"red",D,4.5],["Beras Pandan Wangi 5kg",85000,"green",D2,4.0],["Beras Merah 2kg",42000,"yellow",D2,4.8],["Beras Jasmine 5kg",95000,"blue",D2,4.6],["Beras Ramos 5kg",68000,"cap",D2,4.2]],
+bumbu:[["Tepung Terigu 1kg",12500,"tgreen",D2,4.7],["Garam Dapur 500g",6000,"tblack",D2,4.0]],nonc:[["Gula Pasir 1kg",15000,"gula",D,4.5],["Minyak Goreng 1L",18000,"minyak",D2,4.8]]};
+const SNK=[["Mie Instan Ayam",3500,"mie","Mie instan rasa ayam bawang, praktis untuk stok dapur.",4.0],["Mie Instan Goreng",3600,"mie","Mie instan goreng dengan bumbu spesial, favorit keluarga.",5.0],["Minyak Goreng 1L",18000,"minyak","Minyak goreng kelapa sawit jernih untuk masak sehari-hari.",4.0]];
+const MER=[["Paket Sembako A",125000,"mug","Beras 5kg, minyak 1L, gula 1kg, dan telur 1kg dalam satu paket.",4.0],["Paket Sembako B",250000,"padel","Beras 10kg, minyak 2L, gula 2kg, telur 2kg, dan mie instan.",4.0]];
 const M=[["Paket Sembako A","Rp 125.000","mug"],["Paket Sembako B","Rp 250.000","padel"]];
 const OP=[["Ukuran Kemasan",'<path d="M5 8h11v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V8zM16 9h2a2 2 0 0 1 0 4h-2M8 4v2M12 4v2"/>',[["1kg",0,"Pilih Merk",[["Sania 1kg",0],["Beras Jago 1kg",1500],["Maknyuss 1kg",3000]]],["2kg",5000,"Pilih Merk",[["Sania 2kg",2000],["Beras Jago 2kg",4000],["Maknyuss 2kg",6000]]],["5kg",12000,"Pilih Merk",[["Sania 5kg",10000],["Beras Jago 5kg",12500],["Maknyuss 5kg",15000]]],["10kg",25000,"Pilih Merk",[["Sania 10kg",22000],["Beras Jago 10kg",25000],["Maknyuss 10kg",30000]]]]]];
 const $=id=>document.getElementById(id),fmt=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,".");
 /* Proxy: IMGP[key] selalu mengembalikan gambar valid (tidak ada blank image) */
 const IMGP=new Proxy(IMG,{get(t,k){if(k in t)return t[k];if(k==="then"||typeof k==="symbol")return undefined;return t.mascot||""}});
+$("logo").src=IMG.logo;$("banner").src=IMG.banner;$("av").src=IMG.av;
+$("feat").innerHTML=[0,1,2,4].map(i=>{const p=P.beras[i];return `<div class="mc" data-i="${i}" style="width:130px;flex:none;cursor:pointer"><img src="${IMGP[p[2]]}" alt=""><div class="t"><b>${p[0]}</b><em>Rp ${fmt(p[1])}</em></div></div>`}).join("");
+$("snack").innerHTML=SNK.map((c,i)=>`<div class="mc" data-i="${i}" style="width:130px;flex:none;cursor:pointer"><img src="${IMGP[c[2]]}" alt=""><div class="r">${STR}${c[4].toFixed(1)}</div><div class="t"><b>${c[0]}</b><em>Rp ${fmt(c[1])}</em></div></div>`).join("");
 
-// Flash Sale & Terlaris data
+// Flash Sale & Terlaris data & render
 const FLASH_SALE=[["Beras Premium 5kg",62000,72000,"red",D,4.9],["Minyak Goreng 2L",34000,38000,"minyak","Minyak goreng berkualitas tinggi 2 liter.",4.8],["Gula Pasir 1kg",13500,15000,"gula","Gula pasir manis higienis.",4.9],["Mie Instan Dus (40bks)",92000,105000,"mie","Dus mie instan hemat untuk stok.",5.0]];
 const TRENDING=[["Beras Pandan Wangi 5kg",85000,"green","Beras wangi pulen.",4.9,1420],["Tepung Terigu 1kg",12500,"tgreen","Terigu serbaguna.",4.7,980],["Paket Sembako A",125000,"mug","Beras, minyak, gula, telur.",4.8,2150],["Garam Dapur 500g",6000,"tblack","Garam beryodium.",4.6,830]];
 
-function initHome(){
-  try{$("logo").src=IMG.logo}catch(e){}
-  try{$("banner").src=IMG.banner}catch(e){}
-  try{$("av").src=IMG.av}catch(e){}
-  try{$("feat").innerHTML=[0,1,2,4].map(i=>{const p=P.beras[i];return `<div class="mc" data-i="${i}" style="width:130px;flex:none;cursor:pointer"><img src="${IMGP[p[2]]}" alt=""><div class="t"><b>${p[0]}</b><em>Rp ${fmt(p[1])}</em></div></div>`}).join("")}catch(e){}
-  try{$("snack").innerHTML=SNK.map((c,i)=>`<div class="mc" data-i="${i}" style="width:130px;flex:none;cursor:pointer"><img src="${IMGP[c[2]]}" alt=""><div class="r">${STR}${c[4].toFixed(1)}</div><div class="t"><b>${c[0]}</b><em>Rp ${fmt(c[1])}</em></div></div>`).join("")}catch(e){}
-  try{$("flash-sale").innerHTML=FLASH_SALE.map((p,i)=>`<div class="mc" data-fs="${i}" style="width:130px;flex:none;cursor:pointer"><div style="position:absolute;top:6px;left:6px;background:var(--red);color:#fff;font-size:11px;font-weight:800;padding:2px 6px;border-radius:6px;z-index:2">PROMO 15%</div><img src="${IMGP[p[3]]}" alt=""><div class="t"><b>${p[0]}</b><em>Rp ${fmt(p[1])}</em><small style="text-decoration:line-through;font-size:11px;color:#aaa">Rp ${fmt(p[2])}</small></div></div>`).join("")}catch(e){}
-  try{$("trending").innerHTML=TRENDING.map((p,i)=>`<div class="mc" data-tr="${i}" style="width:130px;flex:none;cursor:pointer"><div class="r">${STR}${p[4]}</div><img src="${IMGP[p[2]]}" alt=""><div class="t"><b>${p[0]}</b><em>Rp ${fmt(p[1])}</em><small style="font-size:11px;color:var(--sub);display:block;margin-top:2px">Terjual ${p[5]}+</small></div></div>`).join("")}catch(e){}
-}
+$("flash-sale").innerHTML=FLASH_SALE.map((p,i)=>`<div class="mc" data-fs="${i}" style="width:130px;flex:none;cursor:pointer"><div style="position:absolute;top:6px;left:6px;background:var(--red);color:#fff;font-size:11px;font-weight:800;padding:2px 6px;border-radius:6px;z-index:2">PROMO 15%</div><img src="${IMGP[p[3]]}" alt=""><div class="t"><b>${p[0]}</b><em>Rp ${fmt(p[1])}</em><small style="text-decoration:line-through;font-size:11px;color:#aaa">Rp ${fmt(p[2])}</small></div></div>`).join("");
+$("trending").innerHTML=TRENDING.map((p,i)=>`<div class="mc" data-tr="${i}" style="width:130px;flex:none;cursor:pointer"><div class="r">${STR}${p[4]}</div><img src="${IMGP[p[2]]}" alt=""><div class="t"><b>${p[0]}</b><em>Rp ${fmt(p[1])}</em><small style="font-size:11px;color:var(--sub);display:block;margin-top:2px">Terjual ${p[5]}+</small></div></div>`).join("");
 
 $("flash-sale").onclick=e=>{const c=e.target.closest(".mc");if(c){const p=FLASH_SALE[+c.dataset.fs];openItem({n:p[0],u:p[1],img:p[3],cat:"Flash Sale",ds:p[4],r:p[5]})}};
 $("trending").onclick=e=>{const c=e.target.closest(".mc");if(c){const p=TRENDING[+c.dataset.tr];openItem({n:p[0],u:p[1],img:p[2],cat:"Terlaris",ds:p[3],r:p[4]})}};
@@ -471,7 +462,7 @@ fsRotate();setInterval(fsRotate,8000);
 $("snack").onclick=e=>{const c=e.target.closest(".mc");if(c){const p=SNK[+c.dataset.i];openItem({n:p[0],u:p[1],img:p[2],cat:"Mie & Instan",ds:p[3],r:p[4]})}};
 $("feat").onclick=e=>{const c=e.target.closest(".mc");if(c)openD(P.beras[+c.dataset.i])};
 let stab="p";
-const ALL=[...P.beras.map(p=>[p[0],p[1],p[2],"Beras",p[3]]),...P.minyak.map(p=>[p[0],p[1],p[2],"Minyak",p[3]]),...P.bumbu.map(p=>[p[0],p[1],p[2],"Bumbu",p[3]]),...P.mie.map(p=>[p[0],p[1],p[2],"Mie",p[3]]),...P.paket.map(p=>[p[0],p[1],p[2],"Paket Sembako",p[3]]),["Gula Pasir 1kg",15000,"gula","Minyak & Gula","Gula pasir halus untuk masak sehari-hari."],["Minyak Goreng 1L",18000,"minyak","Minyak & Gula","Minyak goreng kelapa sawit jernih untuk masak sehari-hari."]];
+const ALL=[...P.beras.map(p=>[p[0],p[1],p[2],"Beras",p[3]]),...P.bumbu.map(p=>[p[0],p[1],p[2],"Bumbu",p[3]]),["Mie Instan Ayam",3500,"mie","Mie","Mie instan rasa ayam bawang, praktis untuk stok dapur."],["Gula Pasir 1kg",15000,"gula","Minyak","Gula pasir halus untuk masak sehari-hari."],["Minyak Goreng 1L",18000,"minyak","Minyak","Minyak goreng kelapa sawit jernih untuk masak sehari-hari."],["Paket Sembako A",125000,"mug","Paket Sembako","Beras 5kg, minyak 1L, gula 1kg, dan telur 1kg dalam satu paket."],["Paket Sembako B",250000,"padel","Paket Sembako","Beras 10kg, minyak 2L, gula 2kg, telur 2kg, dan mie instan."]];
 const CF=["Awake Sembako Central","Awake Sembako KBP","Awake Sembako Dago","Awake Sembako Senayan","Awake Sembako Ubud"];
 function setQ(v){$("qi").value=v;rs()}
 function rs(){const q=$("qi").value.trim().toLowerCase(),b=$("sres"),pr=stab=="p";
@@ -677,9 +668,9 @@ Object.assign(CT,{Jakarta:{img:"jakarta",t:"13.50",c:[["Awake Sembako Central","
 Object.assign(CF2,{"Awake Sembako Central":{city:"Jakarta",open:1,t:"13.50",ph:"dgph",idx:0,ab:"Toko sembako pusat di Jakarta, lengkap untuk kebutuhan keluarga.",fa:["wifi","ac","parking","toilet"],m:"Awake Team"},"Awake Sembako Senayan":{city:"Jakarta",open:1,t:"13.50",ph:"ubph",idx:0,ab:"Toko sembako modern di Senayan untuk belanja cepat.",fa:["wifi","power","parking","toilet"],m:"Awake Team"}});
 CAFES["Awake Sembako Senayan"]={city:"Jakarta",open:1};CF.push("Awake Sembako Senayan");
 const _oc=openCity;openCity=function(n){_oc(n);$("cth").style.filter=(n=="Jakarta"||n=="Makassar")?"blur(1.5px)":"";$("cth").style.transform=(n=="Jakarta"||n=="Makassar")?"scale(1.06)":"";if(!CT[n].c.length)$("ctc").innerHTML=emp("No stores yet","We\u2019re opening soon in this city")};
-const noncProds=[["Gula Pasir 1kg",15000,"gula",D2],["Garam Dapur 500g",6000,"gula",D2]];
-$("g-nonc").innerHTML=noncProds.map((p,i)=>`<div class="it" data-k="nonc" data-i="${i}"><img class="im" src="${IMGP[p[2]]}" alt=""><div class="card"><b>${p[0]}</b><i>Minyak & Gula</i><em>Rp ${fmt(p[1])}</em></div></div>`).join("");
-$("g-nonc").onclick=e=>{const c=e.target.closest(".it");if(c)openD(noncProds[+c.dataset.i])};
+P.nonc=[["Gula Pasir 1kg",15000,"gula",D2],["Garam Dapur 500g",6000,"gula",D2]];
+$("g-nonc").innerHTML=P.nonc.map((p,i)=>`<div class="it" data-i="${i}"><img class="im" src="${IMGP[p[2]]}" alt=""><div class="card"><b>${p[0]}</b><i>Minyak & Gula</i><em>Rp ${fmt(p[1])}</em></div></div>`).join("");
+$("g-nonc").onclick=e=>{const c=e.target.closest(".it");if(c)openD(P.nonc[c.dataset.i])};
 document.querySelectorAll("[data-bp]").forEach(b=>b.onclick=()=>show("profile"));["epbk","cwbk","abk","fvbk","nbk","hbk"].forEach(i=>$(i).onclick=()=>show("profile"));
 document.addEventListener("click",e=>{const ey=e.target.closest(".eye");if(ey&&ey.dataset.ee){const i=$(ey.dataset.ee);i.type=i.type=="password"?"text":"password"}});
 /* sign in */
@@ -767,12 +758,6 @@ $("s-tud").addEventListener("click",e=>{if(e.target.closest("#tdb"))show("wallet
 /* log out confirm */
 document.querySelector(".pfl").onclick=()=>cfm("Log Out?","You will be signed out of your account.","Log Out",()=>{show("welcome");gtoast("You have been logged out")});
 
-/* PWA Update Notification */
-if('serviceWorker' in navigator && localStorage.getItem('awake_updated')==='1'){
-  localStorage.removeItem('awake_updated');
-  setTimeout(()=>{if(confirm("AWAKE Sembako has been updated. Reload now to get the latest version?"))location.reload()},1000);
-}
-
 /* Product Reviews */
 let rvRating=0,rvOrder=null;
 function openReview(o){rvOrder=o;rvRating=0;$("rv-txt").value="";$("rvm").classList.add("on");renderReviewStars()}
@@ -857,11 +842,11 @@ function pick(x){if(x.d)openD(x.d);else openItem(x)}
 $("catbk").onclick=()=>show("home");
 function rCats(){
   const cats=[
-    {n:"Beras",c:"coffee",svg:'<path d="M4 8h12v6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V8zm12 1h1.500a2.500 2.500 0 0 1 0 5H16v-1.500h1.500a1 1 0 0 0 0-2H16zM3 20h15v1.500H3z"/>',cnt:P.beras.length+" Produk"},
-    {n:"Minyak",c:"nonc",svg:'<path d="M4 7h13v7a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V7zm13 1h1a2.500 2.500 0 0 1 0 5h-1v-1.500h1a1 1 0 0 0 0-2h-1z"/>',cnt:P.minyak.length+" Produk"},
-    {n:"Bumbu",c:"tea",svg:'<path d="M3 8h14v5a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8zm14 1h1.500a2.500 2.500 0 0 1 0 5H17v-1.500h1.500a1 1 0 0 0 0-2H17zM4 19.500h12V21H4z"/>',cnt:P.bumbu.length+" Produk"},
-    {n:"Mie",c:"snack",svg:'<path d="M2.500 16C3.500 10 7.500 6 12 6s8.500 4 9.500 10l-3.500 1-1.800-4.500h-8.400L6 17z"/><path d="M12 6l-1.200 5h2.400z" fill="#fff"/>',cnt:P.mie.length+" Produk"},
-    {n:"Paket",c:"merch",svg:'<path d="M6 8h12l1.200 12H4.800z"/><path d="M9 10V7.500a3 3 0 0 1 6 0V10" fill="none" stroke="#fff" stroke-width="1.600"/>',cnt:P.paket.length+" Paket"}
+    {n:"Beras",c:"coffee",svg:'<path d="M4 8h12v6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V8zm12 1h1.500a2.500 2.500 0 0 1 0 5H16v-1.500h1.500a1 1 0 0 0 0-2H16zM3 20h15v1.500H3z"/>',cnt:"5 Produk"},
+    {n:"Minyak",c:"nonc",svg:'<path d="M4 7h13v7a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V7zm13 1h1a2.500 2.500 0 0 1 0 5h-1v-1.500h1a1 1 0 0 0 0-2h-1z"/>',cnt:"2 Produk"},
+    {n:"Bumbu",c:"tea",svg:'<path d="M3 8h14v5a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8zm14 1h1.500a2.500 2.500 0 0 1 0 5H17v-1.500h1.500a1 1 0 0 0 0-2H17zM4 19.500h12V21H4z"/>',cnt:"2 Produk"},
+    {n:"Mie",c:"snack",svg:'<path d="M2.500 16C3.500 10 7.500 6 12 6s8.500 4 9.500 10l-3.500 1-1.800-4.500h-8.400L6 17z"/><path d="M12 6l-1.200 5h2.400z" fill="#fff"/>',cnt:"3 Produk"},
+    {n:"Paket",c:"merch",svg:'<path d="M6 8h12l1.200 12H4.800z"/><path d="M9 10V7.500a3 3 0 0 1 6 0V10" fill="none" stroke="#fff" stroke-width="1.600"/>',cnt:"2 Paket"}
   ];
   $("catlist").innerHTML=cats.map(x=>`<div class="cat-card" data-go="${x.c}" style="background:#fff;border-radius:14px;padding:16px;cursor:pointer;display:flex;align-items:center;gap:12px;box-shadow:0 1px 6px rgba(0,0,0,.03)"><div style="width:44px;height:44px;border-radius:12px;background:#fde6e6;display:grid;place-items:center;flex:none"><svg viewBox="0 0 24 24" style="width:22px;height:22px;fill:none;stroke:var(--red);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round">${x.svg}</svg></div><div><b style="font-size:13px;font-weight:700;display:block">${x.n}</b><span style="font-size:11px;color:var(--sub);margin-top:2px;display:block">${x.cnt}</span></div></div>`).join("");
   $("catlist").querySelectorAll("[data-go]").forEach(el=>el.onclick=()=>show(el.dataset.go));
@@ -912,7 +897,8 @@ $("sc").onscroll=e=>$("hdr2").classList.toggle("c",e.target.scrollTop>80);
 $("add").onclick=()=>{addCart();$("sq").textContent=qty+" x "+cur[0];$("st").textContent="IDR "+fmt(total());$("ov").classList.add("on");$("sh").classList.add("on")};
 $("ov").onclick=closeS;$("b2").onclick=()=>{closeS();show("cart")};$("b1").onclick=()=>{closeS();show(prev)};
 function fit(){const s=Math.min(1,(innerHeight-70)/740,(innerWidth-16)/360);$("phone").style.transform="scale("+s+")";$("holder").style.width=360*s+"px";$("holder").style.height=740*s+"px"}
-addEventListener("resize",fit);fit();initHome();toast();show("home");
+addEventListener("resize",fit);fit();toast();show("welcome");
+}
 </script>
 </body>
 </html>
