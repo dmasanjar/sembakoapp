@@ -1,0 +1,1231 @@
+{
+ "url": "D:\\Ecommerce\\index.html",
+ "at": "2026-11-02T00:47:15.807Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 1,
+   "filled": [
+    0.31
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 900,
+     "screens": 1,
+     "words": 86,
+     "img": 44,
+     "video": 0,
+     "canvas": 0,
+     "svg": 130,
+     "sections": 0,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 1,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "3mQodoGuTWwAAAABJRU5ErkJggg=="
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Sembako Berkualitas",
+     "words": 2,
+     "chars": 19,
+     "lines": 1,
+     "size": 20,
+     "vw": 1.4,
+     "font": "Plus Jakarta Sans",
+     "weight": 800,
+     "tracking": 0,
+     "leading": 1.2,
+     "top": 511,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": null,
+    "headings": [],
+    "headingSummary": {
+     "count": 0,
+     "maxLines": 0,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Plus Jakarta Sans",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      10,
+      12,
+      13,
+      20
+     ],
+     "sizeCount": 4,
+     "notLoaded": [],
+     "body": {
+      "font": "Plus Jakarta Sans",
+      "size": 12.5,
+      "leading": 1.55,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": null
+     },
+     "measureChars": 55,
+     "max": {
+      "size": 20,
+      "vw": 1.4,
+      "font": "Plus Jakarta Sans",
+      "text": "Sembako Berkualitas"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 1,
+     "smallText": 23
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#e9ebe4",
+     "bodyBgHsl": {
+      "h": 77,
+      "s": 0.15,
+      "l": 0.91
+     },
+     "dark": false,
+     "sectionBgs": [],
+     "textColors": [
+      {
+       "color": "#1a1a1a",
+       "share": 0.71
+      },
+      {
+       "color": "#b0b2aa",
+       "share": 0.11
+      },
+      {
+       "color": "#a9aba3",
+       "share": 0.07
+      },
+      {
+       "color": "#dc1f26",
+       "share": 0.06
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.04
+      }
+     ],
+     "button": {
+      "bg": "#ffffff",
+      "hsl": {
+       "h": 0,
+       "s": 0,
+       "l": 1
+      },
+      "fg": "#1a1a1a"
+     },
+     "lowContrast": [
+      {
+       "text": "By continuing, you agree to our and",
+       "ratio": 2.3,
+       "need": 4.5,
+       "size": 10,
+       "fg": "#a9aba3",
+       "bg": "#ffffff"
+      }
+     ]
+    },
+    "buttons": {
+     "count": 33,
+     "inHero": 33,
+     "radius": "pill",
+     "height": 31,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Welcome",
+      "Sign In",
+      "Reset Data",
+      "Create Account",
+      "Verification"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 1,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "div#phone.phone → rgba(0, 0, 0, 0.25) 0px 20px 50px 0px"
+     ],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 3,
+     "boxRadius": 52,
+     "squareMedia": 0,
+     "roundedMedia": 1,
+     "mediaRadius": 44,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": null,
+    "fontsLoaded": [
+     "plus jakarta sans"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 900,
+    "margins": {
+     "left": 24,
+     "right": 24
+    },
+    "sections": [],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Sembako Berkualitas",
+      "size": 20,
+      "top": 511,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [],
+    "leftBlocks": 0,
+    "bodySize": 13,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0.33,
+    "voidBox": {
+     "x": 0,
+     "y": 120,
+     "w": 540,
+     "h": 780
+    }
+   },
+   "app": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "dark": false,
+    "ground": "#e9ebe4",
+    "sidebar": null,
+    "topbar": null,
+    "canvas": {
+     "left": 20,
+     "right": 20
+    },
+    "hero": {
+     "text": "Sembako Berkualitas",
+     "words": 2,
+     "chars": 19,
+     "lines": 1,
+     "size": 20,
+     "vw": 1.4,
+     "font": "Plus Jakarta Sans",
+     "weight": 800,
+     "tracking": 0,
+     "leading": 1.2,
+     "top": 511,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 1,
+     "firstScreen": 1,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 3,
+     "radii": [
+      [
+       52,
+       1
+      ],
+      [
+       44,
+       1
+      ],
+      [
+       28,
+       1
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 1,
+     "softShadows": 0,
+     "shadowSamples": [
+      "rgba(0, 0, 0, 0.25) 0px 20px 50px 0px"
+     ],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.68,
+     "tiny": 17,
+     "tinySamples": [
+      "PROMO 15% 10px",
+      "Rp 72.000 10px",
+      "PROMO 15% 10px",
+      "Rp 38.000 10px"
+     ],
+     "sizes": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      20
+     ]
+    },
+    "title": null,
+    "colourShare": 0.028
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 1,
+   "filled": [
+    0.53
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 1024,
+     "screens": 1,
+     "words": 86,
+     "img": 44,
+     "video": 0,
+     "canvas": 0,
+     "svg": 130,
+     "sections": 0,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 1,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "3mQodoGuTWwAAAABJRU5ErkJggg=="
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Sembako Berkualitas",
+     "words": 2,
+     "chars": 19,
+     "lines": 1,
+     "size": 20,
+     "vw": 2.6,
+     "font": "Plus Jakarta Sans",
+     "weight": 800,
+     "tracking": 0,
+     "leading": 1.2,
+     "top": 585,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": null,
+    "headings": [],
+    "headingSummary": {
+     "count": 0,
+     "maxLines": 0,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Plus Jakarta Sans",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      10,
+      12,
+      13,
+      20
+     ],
+     "sizeCount": 4,
+     "notLoaded": [],
+     "body": {
+      "font": "Plus Jakarta Sans",
+      "size": 12.5,
+      "leading": 1.55,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": null
+     },
+     "measureChars": 55,
+     "max": {
+      "size": 20,
+      "vw": 2.6,
+      "font": "Plus Jakarta Sans",
+      "text": "Sembako Berkualitas"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 1,
+     "smallText": 23
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#e9ebe4",
+     "bodyBgHsl": {
+      "h": 77,
+      "s": 0.15,
+      "l": 0.91
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#0c0c0c",
+       "top": 205,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 0.05
+       }
+      },
+      {
+       "color": "#eef0e8",
+       "top": 213,
+       "hsl": {
+        "h": 75,
+        "s": 0.21,
+        "l": 0.93
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#1a1a1a",
+       "share": 0.71
+      },
+      {
+       "color": "#b0b2aa",
+       "share": 0.11
+      },
+      {
+       "color": "#a9aba3",
+       "share": 0.07
+      },
+      {
+       "color": "#dc1f26",
+       "share": 0.06
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.04
+      }
+     ],
+     "button": {
+      "bg": "#ffffff",
+      "hsl": {
+       "h": 0,
+       "s": 0,
+       "l": 1
+      },
+      "fg": "#1a1a1a"
+     },
+     "lowContrast": [
+      {
+       "text": "By continuing, you agree to our and",
+       "ratio": 2.3,
+       "need": 4.5,
+       "size": 10,
+       "fg": "#a9aba3",
+       "bg": "#ffffff"
+      }
+     ]
+    },
+    "buttons": {
+     "count": 33,
+     "inHero": 33,
+     "radius": "pill",
+     "height": 31,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Welcome",
+      "Sign In",
+      "Reset Data",
+      "Create Account",
+      "Verification"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 1,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "div#phone.phone → rgba(0, 0, 0, 0.25) 0px 20px 50px 0px"
+     ],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 3,
+     "boxRadius": 52,
+     "squareMedia": 0,
+     "roundedMedia": 1,
+     "mediaRadius": 44,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": null,
+    "fontsLoaded": [
+     "plus jakarta sans"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 1024,
+    "margins": {
+     "left": 29,
+     "right": 29
+    },
+    "sections": [],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Sembako Berkualitas",
+      "size": 20,
+      "top": 585,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [],
+    "leftBlocks": 0,
+    "bodySize": 13,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "dark": false,
+    "ground": "#e9ebe4",
+    "sidebar": null,
+    "topbar": null,
+    "canvas": {
+     "left": 18,
+     "right": 18
+    },
+    "hero": {
+     "text": "Sembako Berkualitas",
+     "words": 2,
+     "chars": 19,
+     "lines": 1,
+     "size": 20,
+     "vw": 2.6,
+     "font": "Plus Jakarta Sans",
+     "weight": 800,
+     "tracking": 0,
+     "leading": 1.2,
+     "top": 585,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 1,
+     "firstScreen": 1,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 3,
+     "radii": [
+      [
+       52,
+       1
+      ],
+      [
+       44,
+       1
+      ],
+      [
+       28,
+       1
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 1,
+     "softShadows": 0,
+     "shadowSamples": [
+      "rgba(0, 0, 0, 0.25) 0px 20px 50px 0px"
+     ],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.68,
+     "tiny": 17,
+     "tinySamples": [
+      "PROMO 15% 10px",
+      "Rp 72.000 10px",
+      "PROMO 15% 10px",
+      "Rp 38.000 10px"
+     ],
+     "sizes": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      20
+     ]
+    },
+    "title": null,
+    "colourShare": 0.043
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 2,
+   "filled": [
+    0.7,
+    0.89
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 1187,
+     "screens": 1.4,
+     "words": 86,
+     "img": 44,
+     "video": 0,
+     "canvas": 0,
+     "svg": 130,
+     "sections": 0,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 1,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "3mQodoGuTWwAAAABJRU5ErkJggg=="
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Welcome",
+     "words": 1,
+     "chars": 7,
+     "lines": 1,
+     "size": 12,
+     "vw": 3.1,
+     "font": "Plus Jakarta Sans",
+     "weight": 600,
+     "tracking": 0,
+     "leading": 1.2,
+     "top": 14,
+     "tag": "button",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": null,
+    "headings": [],
+    "headingSummary": {
+     "count": 0,
+     "maxLines": 0,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Plus Jakarta Sans",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      10,
+      12,
+      13,
+      20
+     ],
+     "sizeCount": 4,
+     "notLoaded": [],
+     "body": {
+      "font": "Plus Jakarta Sans",
+      "size": 12.5,
+      "leading": 1.55,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": null
+     },
+     "measureChars": 55,
+     "max": {
+      "size": 20,
+      "vw": 5.1,
+      "font": "Plus Jakarta Sans",
+      "text": "Sembako Berkualitas"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 1,
+     "smallText": 23
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#e9ebe4",
+     "bodyBgHsl": {
+      "h": 77,
+      "s": 0.15,
+      "l": 0.91
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#0c0c0c",
+       "top": 427,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 0.05
+       }
+      },
+      {
+       "color": "#eef0e8",
+       "top": 435,
+       "hsl": {
+        "h": 75,
+        "s": 0.21,
+        "l": 0.93
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#1a1a1a",
+       "share": 0.71
+      },
+      {
+       "color": "#b0b2aa",
+       "share": 0.11
+      },
+      {
+       "color": "#a9aba3",
+       "share": 0.07
+      },
+      {
+       "color": "#dc1f26",
+       "share": 0.06
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.04
+      }
+     ],
+     "button": {
+      "bg": "#ffffff",
+      "hsl": {
+       "h": 0,
+       "s": 0,
+       "l": 1
+      },
+      "fg": "#1a1a1a"
+     },
+     "lowContrast": [
+      {
+       "text": "By continuing, you agree to our and",
+       "ratio": 2.3,
+       "need": 4.5,
+       "size": 10,
+       "fg": "#a9aba3",
+       "bg": "#ffffff"
+      }
+     ]
+    },
+    "buttons": {
+     "count": 33,
+     "inHero": 31,
+     "radius": "pill",
+     "height": 31,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Welcome",
+      "Sign In",
+      "Reset Data",
+      "Create Account",
+      "Verification"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 1,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "div#phone.phone → rgba(0, 0, 0, 0.25) 0px 20px 50px 0px"
+     ],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 3,
+     "boxRadius": 52,
+     "squareMedia": 0,
+     "roundedMedia": 1,
+     "mediaRadius": 44,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.17
+     }
+    ],
+    "nav": null,
+    "fontsLoaded": [
+     "plus jakarta sans"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 1187,
+    "margins": {
+     "left": 12,
+     "right": 12
+    },
+    "sections": [
+     {
+      "sel": "div#tabs.tabs",
+      "tag": "div",
+      "top": 14,
+      "height": 401,
+      "words": 60,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 9,
+      "right": 9,
+      "textLeft": 24,
+      "textRight": 24,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div#holder.holder",
+      "tag": "div",
+      "top": 427,
+      "height": 740,
+      "words": 28,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Sembako Berkualitas",
+       "size": 20,
+       "tag": "h1"
+      },
+      "left": 47,
+      "right": 47,
+      "textLeft": 47,
+      "textRight": 47,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Sembako Berkualitas",
+      "size": 20,
+      "top": 807,
+      "firstScreen": false
+     }
+    ],
+    "edgeText": [],
+    "edges": [],
+    "leftBlocks": 0,
+    "bodySize": 13,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "dark": false,
+    "ground": "#e9ebe4",
+    "sidebar": null,
+    "topbar": null,
+    "canvas": {
+     "left": 10,
+     "right": 10
+    },
+    "hero": {
+     "text": "Welcome",
+     "words": 1,
+     "chars": 7,
+     "lines": 1,
+     "size": 12,
+     "vw": 3.1,
+     "font": "Plus Jakarta Sans",
+     "weight": 600,
+     "tracking": 0,
+     "leading": 1.2,
+     "top": 14,
+     "tag": "button",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 1,
+     "firstScreen": 1,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 3,
+     "radii": [
+      [
+       52,
+       1
+      ],
+      [
+       44,
+       1
+      ],
+      [
+       28,
+       1
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 1,
+     "softShadows": 0,
+     "shadowSamples": [
+      "rgba(0, 0, 0, 0.25) 0px 20px 50px 0px"
+     ],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.68,
+     "tiny": 17,
+     "tinySamples": [
+      "PROMO 15% 10px",
+      "Rp 72.000 10px",
+      "PROMO 15% 10px",
+      "Rp 38.000 10px"
+     ],
+     "sizes": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      20
+     ]
+    },
+    "title": null,
+    "colourShare": 0.059
+   },
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "FAIL",
+   "id": "contrast",
+   "width": 1440,
+   "message": "Unreadable text: \"By continuing, you agree to our and\" 2.3:1 (#a9aba3 on #ffffff)",
+   "fix": "Raise contrast to at least 4.5:1 for text, 3:1 for large display.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "hero-void",
+   "width": 1440,
+   "message": "33% of the first screen is one empty block (540×780px at 0,120).",
+   "fix": "Place the void on purpose or fill it: move the picture, the film or one fact into it, grow the headline to meet it, or shrink the screen to its content. A void reads as placed only when something closes it on the far side and it is the screen's one rest."
+  },
+  {
+   "level": "FAIL",
+   "id": "heavy-shadow",
+   "width": 1440,
+   "message": "1 panel shadow(s) heavy enough to read as floating: rgba(0, 0, 0, 0.25) 0px 20px 50px 0px",
+   "fix": "Panels sit on the ground: separate them with a fill one step from the ground or a quiet 1px border. A shadow, if any, is under 8% black with a small blur. Real overlays (menus, dialogs, popovers) may float.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "tiny-text",
+   "width": 1440,
+   "message": "17 text blocks under 11px: PROMO 15% 10px, Rp 72.000 10px, PROMO 15% 10px, Rp 38.000 10px.",
+   "fix": "Nothing below 11px; secondary text 12px, data 13–14px.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "no-title",
+   "width": 1440,
+   "message": "The screen has no h1.",
+   "fix": "Name the screen in an h1 at the top of the canvas (18–28px): \"Overview\", \"Payouts\", the project's name.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "D:\\Ecommerce\\.taste-skill\\before\\desktop-fold.jpg",
+   "pages": [
+    "D:\\Ecommerce\\.taste-skill\\before\\desktop-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "D:\\Ecommerce\\.taste-skill\\before\\tablet-fold.jpg",
+   "pages": [
+    "D:\\Ecommerce\\.taste-skill\\before\\tablet-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "D:\\Ecommerce\\.taste-skill\\before\\mobile-fold.jpg",
+   "pages": [
+    "D:\\Ecommerce\\.taste-skill\\before\\mobile-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

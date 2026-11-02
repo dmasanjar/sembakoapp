@@ -1,0 +1,324 @@
+
+
+# PRODUCT REQUIREMENT DOCUMENT (PRD)
+
+## Produk: AWAKE Sembako (E-Commerce & Retail Bahan Pokok Multi-Cabang)
+
+**Versi:** 1.0 (Lengkap)
+
+**Tipe Platform:** Mobile-First Web App / PWA (Sisi Pelanggan) & Web Dashboard (Sisi Admin)
+
+---
+
+## 1. Ikhtisar Produk (Product Overview)
+
+* **Latar Belakang:** Kebutuhan bahan pangan pokok (sembako) menuntut proses pembelian yang cepat, transparan, dan dapat diandalkan secara lokal.
+* **Tujuan Produk:** Menyediakan ekosistem ritel omnichannel yang menghubungkan pelanggan rumah tangga dengan cabang toko/gudang sembako terdekat melalui pemesanan online, perhitungan ongkir otomatis berbasis peta (jarak km), pelacakan armada kurir secara real-time, dompet digital in-app, serta portal admin untuk pengelolaan stok dan pesanan.
+
+---
+
+## 2. Aktor & Peran Pengguna (User Personas)
+
+1. **Pelanggan (Customer):**
+* Mendaftar dan memverifikasi akun.
+
+
+* Memilih cabang toko aktif terdekat.
+
+
+* Menentukan alamat via titik peta interaktif.
+
+
+* Melakukan transaksi sembako menggunakan saldo dompet atau metode pembayaran lain.
+
+
+* Memantau pesanan, rute kurir, dan berkonsultasi via chat in-app.
+
+
+
+
+2. **Admin Toko / Store Manager (Cabang):**
+* Mengelola katalog barang dan stok fisik per cabang.
+
+
+* Memproses pesanan masuk (*Approve*, *Preparing*, *Cancel*).
+
+
+* Memverifikasi bukti transfer isi ulang saldo dompet (*Top-Up*).
+
+
+* Berkomunikasi langsung dengan pelanggan melalui live chat.
+
+
+
+
+3. **Super Admin (Owner / Pusat):**
+* Mengatur data cabang toko, tarif dasar ongkir per kilometer, dan laporan keuangan komprehensif.
+
+
+
+---
+
+## 3. Arsitektur Layar & Navigasi (Sitemap)
+
+### 3.1. Sisi Pelanggan (Mobile-First / PWA)
+
+* **Autentikasi & Akun:**
+* `s-welcome`: Orientasi awal & tombol aksi awal.
+
+
+* `s-signup`: Form registrasi lengkap dengan upload foto profil.
+
+
+* `s-verify`: Input 6-digit kode OTP beserta *resend countdown*.
+
+
+* `s-signin`: Form login email & password dengan opsi tampil/sembunyi password.
+
+
+
+
+* **Belanja & Katalog:**
+* `s-home`: Beranda utama (banner promo, pemilihan lokasi toko aktif, kategori produk, flash sale ticker, produk unggulan).
+
+
+* `s-search`: Pencarian global dengan tab filter *Products* vs *Toko/Cabang*.
+
+
+* `s-allp` / `s-cats`: Direktori katalog produk lengkap dan grid kategori sembako (Beras, Minyak, Bumbu, Mie, Paket).
+
+
+* `s-detail` / `s-item`: Informasi detail barang, ulasan/rating, opsi varian satuan/berat, pengatur kuantitas (*counter*), dan tombol *Add to Cart*.
+
+
+
+
+* **Transaksi & Logistik:**
+* `s-cart`: Keranjang belanja, voucher diskon, rincian biaya, dan kalkulasi ongkir.
+
+
+* `s-addr` & `s-map-picker`: Manajemen alamat tersimpan dengan pin-point peta dan reverse geocoding.
+
+
+* `s-orders` / `s-od`: Riwayat transaksi multi-status dan struk pesanan digital (*receipt card* dengan motif sobekan kertas).
+
+
+* `s-tracking`: Peta pelacakan langsung kurir menuju alamat pelanggan beserta estimasi waktu tiba (ETA).
+
+
+* **Dompet Digital & Komunikasi:**
+* `s-profile` / `s-ep`: Profil pelanggan, metrik belanja (*orders, spent, items*), dan edit profil.
+
+
+* `s-wallets` / `s-tu` / `s-tud`: Saldo dompet, riwayat mutasi, form top-up instan, salin nomor rekening bank, dan unggah bukti transfer.
+
+
+* `s-chat`: Live chat dua arah dengan manajer cabang toko aktif.
+
+
+
+
+
+### 3.2. Sisi Admin (Back-Office Dashboard)
+
+* `ADM-DASH`: Dashboard analitik transaksi dan status stok per cabang.
+
+
+* `ADM-ORD`: Manajemen pesanan masuk, pembatalan pesanan (*Admin: Cancel Order*), dan persetujuan pengiriman (*Admin: Approve*).
+
+
+* `ADM-PROD`: Manajemen katalog (SKU, nama, foto, kategori, berat dalam gram/kg, harga promo).
+
+
+* `ADM-STOCK`: Manajemen persediaan inventaris dan penyesuaian stok opname.
+
+
+* `ADM-WAL`: Verifikasi bukti pembayaran top-up dompet pelanggan.
+
+
+* `ADM-LOG`: Pengaturan radius jangkauan cabang dan tarif dasar per kilometer.
+
+---
+
+## 4. Spesifikasi Fungsional Terinci
+
+### Modul 1: Autentikasi & Profil Pengguna (`FEAT-AUTH`)
+
+1. **Pendaftaran Akun:** Isian wajib berupa nama lengkap, email, nomor ponsel, jenis kelamin (opsi: Male, Female, Other), dan kata sandi.
+
+
+2. **Pilihan Media Foto Profil:** Pilihan foto melalui kamera langsung atau galeri perangkat.
+
+
+3. **Verifikasi OTP:** Kolom masukan 6 digit terpisah dengan otomatis berpindah fokus dan tombol pengiriman ulang setelah 60 detik.
+
+
+4. **Keamanan:** Mendukung pergantian kata sandi (`s-cpw`) dengan validasi password lama dan konfirmasi password baru.
+
+
+
+### Modul 2: Multi-Store & Katalog Sembako (`FEAT-CAT`)
+
+1. **Binding Toko Cabang:** Setiap keranjang belanja terikat pada satu cabang toko aktif (misal: Toko Central, KBP, Bandung, dll.).
+
+
+2. **Konfirmasi Ganti Cabang:** Apabila pelanggan mengganti cabang toko saat terdapat barang di keranjang belanja, sistem memicu modal konfirmasi *Change Store Location*.
+
+
+3. **Struktur Kategori Produk:** Menampung kategori sembako (Beras, Minyak & Gula, Bumbu & Tepung, Mie & Instan, Paket Sembako).
+
+
+4. **Flash Sale & Diskon:** Banner hitung mundur flash sale harian dengan harga coret pada rincian produk.
+
+
+
+### Modul 3: Map Location, Pinpoint & Ongkir Dinamis (`FEAT-MAP-LOG`)
+
+1. **Penentuan Titik Antar (Pinpoint):** Peta interaktif yang dapat digeser (drag-and-drop marker) dengan integrasi HTML5 Geolocation API untuk mendeteksi posisi GPS pengguna saat itu.
+2. **Formula Ongkir Otomatis:**
+
+$$\text{Total Ongkir} = \text{Tarif Dasar} + (\text{Jarak Tempuh (km)} \times \text{Tarif per Km}) + \text{Surcharge Berat}$$
+
+
+* Titik asal diambil dari koordinat cabang toko yang dipilih.
+
+
+* Titik tujuan diambil dari koordinat pin alamat pelanggan.
+* Tambahan biaya berat (*surcharge*) otomatis dihitung apabila total bobot belanjaan melebihi batas beban motor kurir (misal: paket karung beras > 20 kg).
+
+
+
+
+3. **Batas Jangkauan Cabang (Geo-fencing):** Menolak proses checkout apabila jarak pengantaran melebihi batas operasional cabang (contoh: > 15 km).
+
+### Modul 4: Checkout, Struk & Live Tracking (`FEAT-ORD`)
+
+1. **Keranjang Belanja:** Kontrol kuantitas bertahap (`+` / `-`), kolom kode voucher promo, dan rincian ringkasan subtotal.
+
+
+2. **Struk Digital (*Receipt View*):** Menampilkan nomor ID transaksi unik, daftar barang, status order (*Pending*, *Preparing*, *Finished*, *Cancelled*), dan kartu visual bergaris sobek (*tear line*).
+
+
+3. **Live Courier Tracking:**
+* Aktif saat status pesanan beralih ke pengiriman kurir.
+
+
+* Menampilkan polyline rute jalan, marker kurir yang diperbarui berdasarkan koordinat perangkat kurir, kartu info kurir (nama & nomor plat), serta tombol komunikasi cepat.
+
+
+
+
+
+### Modul 5: Dompet Digital & Pembayaran Manual (`FEAT-WAL`)
+
+1. **Virtual Wallet Card:** Menampilkan visual kartu dengan saldo aktif, nomor identifikasi wallet, serta tombol aksi *Top Up*.
+
+
+2. **Alur Top-Up Saldo:**
+* Pilihan preset nominal cepat (grid tombol nominal).
+
+
+* Tampilan nomor rekening bank toko beserta tombol *Salin Nomor Rekening*.
+
+
+* Unggah bukti transfer foto/struk transfer dengan preview visual sebelum submit.
+
+
+
+
+3. **Filter Transaksi:** Filter data riwayat transaksi berdasarkan kategori *All*, *Top Up*, *Purchase*, dan *Refund*.
+
+
+
+### Modul 6: Layanan Live Chat In-App (`FEAT-COMM`)
+
+1. **Kanal Chat Terdedikasi:** Terhubung langsung dengan manajer cabang toko dari lokasi belanja.
+
+
+2. **Fitur Percakapan:** Pengiriman teks, lampiran foto/gambar, tombol pertanyaan cepat (*quick-replies*), dan indikator animasi mengetik (*typing indicator dots*).
+
+
+
+### Modul 7: Panel Admin & Merchant Back-Office (`FEAT-ADMIN`)
+
+1. **Manajemen Order (`Admin: Approve` & `Admin: Cancel Order`):**
+* Mengubah status pesanan secara bertahap dari *Pending* $\rightarrow$ *Preparing* $\rightarrow$ *In Delivery* $\rightarrow$ *Finished*.
+
+
+* Tombol *Admin: Cancel Order* untuk pembatalan pesanan yang secara otomatis memicu proses pengembalian dana (*Refund*) ke saldo dompet pelanggan.
+
+
+
+
+2. **Persetujuan Top-Up Dompet:**
+* Memeriksa daftar antrean top-up berstatus *Pending*.
+
+
+* Membuka modal pratinjau bukti transfer yang dikirim pelanggan.
+
+
+* Tombol *Approve* (saldo otomatis bertambah ke akun pelanggan) dan *Reject* (dengan catatan alasan).
+
+
+
+
+3. **Pengelolaan Stok & Produk:** Pengaturan kuantitas stok per cabang, harga promo, bobot produk, dan kategori.
+
+
+
+---
+
+## 5. Kebutuhan Antarmuka & Desain UI/UX
+
+1. **Spesifikasi Tipografi & Warna:**
+* Font: *Plus Jakarta Sans*.
+
+
+* Warna Aksen Utama: Merah Ritel (`--red: #dc1f26`).
+
+
+* Warna Latar Belakang: Netral terang (`#eef0e8` / `#ffffff`).
+
+
+
+
+2. **Kesesuaian Perangkat (Mobile Frame):**
+* Viewport mobile teroptimasi dengan rasio ukuran 360x740 px.
+
+
+* Mendukung safe area inset untuk perangkat berponi (`env(safe-area-inset-top)` & `env(safe-area-inset-bottom)`).
+
+
+
+
+3. **Elemen Interaksi Mikro:**
+* Bottom Navigation Bar dengan indikator ikon aktif.
+
+
+* Floating Bottom Sheet untuk notifikasi penambahan item keranjang (*Added to Cart*) dan aksi modal.
+
+
+* Banner status mengambang (*Toast Notification*) untuk respon aksi sistem.
+
+
+
+
+
+---
+
+## 6. Kriteria Penerimaan Sistem (Definition of Done)
+
+* [ ] Pengguna dapat mendaftar, menerima dan memvalidasi OTP 6-kolom, serta masuk ke aplikasi secara mulus.
+
+
+* [ ] Penambahan alamat baru berhasil merekam data garis lintang (latitude) dan garis bujur (longitude) dari peta interaktif.
+* [ ] Nilai ongkos kirim pada keranjang belanja terhitung dinamis berdasarkan jarak cabang terpilih ke alamat antar.
+
+
+* [ ] Pesanan yang dibatalkan oleh admin (*Cancel Order*) mengembalikan saldo pemotongan dompet pelanggan secara otomatis.
+
+
+* [ ] Verifikasi top-up oleh admin (*Admin: Approve*) secara instan menambahkan nilai saldo pada kartu dompet digital pengguna.
+
+
+* [ ] Rincian order akhir menyajikan tampilan struk digital dengan garis sobekan kertas (*tear design*), status pesanan yang sesuai, serta peta pelacakan kurir saat pengantaran.
