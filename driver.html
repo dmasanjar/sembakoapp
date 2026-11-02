@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Awake Driver - Delivery Portal</title>
+<title>Awake Driver Portal - CRUD & Delivery</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--pg:#f4f6f0;--tx:#1a1a1a;--sub:#707670;--green:#2e7d32;--red:#dc1f26;--blue:#1976d2;--border:#e0e4dc;--card:#fff}
@@ -20,7 +20,9 @@ header{background:#fff;border-bottom:1px solid var(--border);padding:14px 20px;d
 .badge.finished{background:#d1e7dd;color:#0f5132}
 .btn{background:var(--blue);color:#fff;border:0;padding:8px 16px;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer}
 .btn.complete{background:var(--green)}
+.btn.secondary{background:#eef2ea;color:var(--tx)}
 .empty{text-align:center;padding:60px 20px;color:var(--sub)}
+.toast{position:fixed;bottom:24px;right:24px;background:#1a1a1a;color:#fff;padding:12px 20px;border-radius:12px;font-weight:600;box-shadow:0 6px 20px rgba(0,0,0,.2);display:none;z-index:2000}
 </style>
 </head>
 <body>
@@ -29,22 +31,30 @@ header{background:#fff;border-bottom:1px solid var(--border);padding:14px 20px;d
     <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--blue)"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
     Awake Driver Portal
   </div>
-  <div style="font-weight:600;font-size:14px;color:var(--sub)">Driver: Budi Santoso</div>
+  <div style="font-weight:600;font-size:14px;color:var(--sub)" id="driver-name-disp">Driver: Budi Santoso</div>
 </header>
 
 <div class="main">
-  <h2 style="margin-bottom:16px">Assigned Deliveries</h2>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+    <h2>Assigned Deliveries & Notes</h2>
+    <button class="btn secondary" onclick="switchDriver()">Change Driver Profile</button>
+  </div>
   <div id="driver-orders"></div>
 </div>
 
+<div class="toast" id="toast">Updated successfully</div>
+
 <script>
 const SK="awake_ui_v2";
-let orders=[];
+let orders=[], drivers=[];
 
 function loadData(){
   try{
     const d=JSON.parse(localStorage.getItem(SK)||"null");
-    if(d) orders=d.orders||[];
+    if(d){
+      orders=d.orders||[];
+      drivers=d.drivers||[{name:"Budi Santoso"}, {name:"Joko Widodo"}];
+    }
   }catch(e){console.error(e);}
 }
 
@@ -53,13 +63,30 @@ function saveData(){
     const d=JSON.parse(localStorage.getItem(SK)||"{}");
     d.orders=orders;
     localStorage.setItem(SK, JSON.stringify(d));
+    showToast("Status updated");
   }catch(e){console.error(e);}
+}
+
+function showToast(msg){
+  const t=document.getElementById("toast");
+  t.textContent=msg;
+  t.style.display="block";
+  setTimeout(()=>t.style.display="none", 2000);
+}
+
+let activeDriver="Budi Santoso";
+function switchDriver(){
+  const name=prompt("Enter Driver Name:", activeDriver);
+  if(name){
+    activeDriver=name;
+    document.getElementById("driver-name-disp").textContent="Driver: "+activeDriver;
+    render();
+  }
 }
 
 function render(){
   loadData();
-  // Show orders that are preparing or in delivery
-  const list=orders.filter(o=>o.st=="preparing"||o.st=="in delivery");
+  const list=orders.filter(o=>o.st=="preparing"||o.st=="in delivery"||o.st=="finished");
   const container=document.getElementById("driver-orders");
   
   if(!list.length){
@@ -67,20 +94,22 @@ function render(){
     return;
   }
 
-  container.innerHTML=list.map((o, idx)=>{
+  container.innerHTML=list.map((o)=>{
     const realIdx=orders.findIndex(x=>x.id==o.id);
     const itemsText=(o.items||[]).map(i=>`${i.q}x ${i.n}`).join(", ");
     const tot=(o.items||[]).reduce((a,c)=>a+c.u*c.q,0)+3000;
     return `<div class="card">
       <div class="order-top">
         <b>${o.id}</b>
-        <span class="badge ${o.st=='in delivery'?'delivery':'preparing'}">${o.st}</span>
+        <span class="badge ${o.st=='in delivery'?'delivery':(o.st=='finished'?'finished':'preparing')}">${o.st}</span>
       </div>
       <div style="margin-bottom:8px;font-size:13px;color:var(--sub)">Store: <b>${o.cafe}</b></div>
       <div style="margin-bottom:12px;font-size:14px">Items: ${itemsText}</div>
+      <div style="margin-bottom:12px;font-size:13px;color:var(--sub)">Driver Notes / Log: <i>${o.driverNote||'None'}</i></div>
       <div style="display:flex;justify-content:space-between;align-items:center">
         <span style="font-weight:700">Total: IDR ${tot.toLocaleString('id-ID')}</span>
-        <div>
+        <div style="display:flex;gap:6px">
+          <button class="btn secondary" onclick="addNote(${realIdx})">Add Note</button>
           ${o.st=='preparing'?`<button class="btn" onclick="updateStatus(${realIdx}, 'in delivery')">Start Delivery</button>`:''}
           ${o.st=='in delivery'?`<button class="btn complete" onclick="updateStatus(${realIdx}, 'finished')">Mark Completed</button>`:''}
         </div>
@@ -93,6 +122,15 @@ function updateStatus(idx, st){
   orders[idx].st=st;
   saveData();
   render();
+}
+
+function addNote(idx){
+  const note=prompt("Enter delivery note:", orders[idx].driverNote||"");
+  if(note!==null){
+    orders[idx].driverNote=note;
+    saveData();
+    render();
+  }
 }
 
 render();
