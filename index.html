@@ -443,16 +443,20 @@ const OP=[["Ukuran Kemasan",'<path d="M5 8h11v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V8z
 const $=id=>document.getElementById(id),fmt=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,".");
 /* Proxy: IMGP[key] selalu mengembalikan gambar valid (tidak ada blank image) */
 const IMGP=new Proxy(IMG,{get(t,k){if(k in t)return t[k];if(k==="then"||typeof k==="symbol")return undefined;return t.mascot||""}});
-$("logo").src=IMG.logo;$("banner").src=IMG.banner;$("av").src=IMG.av;
-$("feat").innerHTML=[0,1,2,4].map(i=>{const p=P.beras[i];return `<div class="mc" data-i="${i}" style="width:130px;flex:none;cursor:pointer"><img src="${IMGP[p[2]]}" alt=""><div class="t"><b>${p[0]}</b><em>Rp ${fmt(p[1])}</em></div></div>`}).join("");
-$("snack").innerHTML=SNK.map((c,i)=>`<div class="mc" data-i="${i}" style="width:130px;flex:none;cursor:pointer"><img src="${IMGP[c[2]]}" alt=""><div class="r">${STR}${c[4].toFixed(1)}</div><div class="t"><b>${c[0]}</b><em>Rp ${fmt(c[1])}</em></div></div>`).join("");
 
-// Flash Sale & Terlaris data & render
+// Flash Sale & Terlaris data
 const FLASH_SALE=[["Beras Premium 5kg",62000,72000,"red",D,4.9],["Minyak Goreng 2L",34000,38000,"minyak","Minyak goreng berkualitas tinggi 2 liter.",4.8],["Gula Pasir 1kg",13500,15000,"gula","Gula pasir manis higienis.",4.9],["Mie Instan Dus (40bks)",92000,105000,"mie","Dus mie instan hemat untuk stok.",5.0]];
 const TRENDING=[["Beras Pandan Wangi 5kg",85000,"green","Beras wangi pulen.",4.9,1420],["Tepung Terigu 1kg",12500,"tgreen","Terigu serbaguna.",4.7,980],["Paket Sembako A",125000,"mug","Beras, minyak, gula, telur.",4.8,2150],["Garam Dapur 500g",6000,"tblack","Garam beryodium.",4.6,830]];
 
-$("flash-sale").innerHTML=FLASH_SALE.map((p,i)=>`<div class="mc" data-fs="${i}" style="width:130px;flex:none;cursor:pointer"><div style="position:absolute;top:6px;left:6px;background:var(--red);color:#fff;font-size:11px;font-weight:800;padding:2px 6px;border-radius:6px;z-index:2">PROMO 15%</div><img src="${IMGP[p[3]]}" alt=""><div class="t"><b>${p[0]}</b><em>Rp ${fmt(p[1])}</em><small style="text-decoration:line-through;font-size:11px;color:#aaa">Rp ${fmt(p[2])}</small></div></div>`).join("");
-$("trending").innerHTML=TRENDING.map((p,i)=>`<div class="mc" data-tr="${i}" style="width:130px;flex:none;cursor:pointer"><div class="r">${STR}${p[4]}</div><img src="${IMGP[p[2]]}" alt=""><div class="t"><b>${p[0]}</b><em>Rp ${fmt(p[1])}</em><small style="font-size:11px;color:var(--sub);display:block;margin-top:2px">Terjual ${p[5]}+</small></div></div>`).join("");
+function initHome(){
+  try{$("logo").src=IMG.logo}catch(e){}
+  try{$("banner").src=IMG.banner}catch(e){}
+  try{$("av").src=IMG.av}catch(e){}
+  try{$("feat").innerHTML=[0,1,2,4].map(i=>{const p=P.beras[i];return `<div class="mc" data-i="${i}" style="width:130px;flex:none;cursor:pointer"><img src="${IMGP[p[2]]}" alt=""><div class="t"><b>${p[0]}</b><em>Rp ${fmt(p[1])}</em></div></div>`}).join("")}catch(e){}
+  try{$("snack").innerHTML=SNK.map((c,i)=>`<div class="mc" data-i="${i}" style="width:130px;flex:none;cursor:pointer"><img src="${IMGP[c[2]]}" alt=""><div class="r">${STR}${c[4].toFixed(1)}</div><div class="t"><b>${c[0]}</b><em>Rp ${fmt(c[1])}</em></div></div>`).join("")}catch(e){}
+  try{$("flash-sale").innerHTML=FLASH_SALE.map((p,i)=>`<div class="mc" data-fs="${i}" style="width:130px;flex:none;cursor:pointer"><div style="position:absolute;top:6px;left:6px;background:var(--red);color:#fff;font-size:11px;font-weight:800;padding:2px 6px;border-radius:6px;z-index:2">PROMO 15%</div><img src="${IMGP[p[3]]}" alt=""><div class="t"><b>${p[0]}</b><em>Rp ${fmt(p[1])}</em><small style="text-decoration:line-through;font-size:11px;color:#aaa">Rp ${fmt(p[2])}</small></div></div>`).join("")}catch(e){}
+  try{$("trending").innerHTML=TRENDING.map((p,i)=>`<div class="mc" data-tr="${i}" style="width:130px;flex:none;cursor:pointer"><div class="r">${STR}${p[4]}</div><img src="${IMGP[p[2]]}" alt=""><div class="t"><b>${p[0]}</b><em>Rp ${fmt(p[1])}</em><small style="font-size:11px;color:var(--sub);display:block;margin-top:2px">Terjual ${p[5]}+</small></div></div>`).join("")}catch(e){}
+}
 
 $("flash-sale").onclick=e=>{const c=e.target.closest(".mc");if(c){const p=FLASH_SALE[+c.dataset.fs];openItem({n:p[0],u:p[1],img:p[3],cat:"Flash Sale",ds:p[4],r:p[5]})}};
 $("trending").onclick=e=>{const c=e.target.closest(".mc");if(c){const p=TRENDING[+c.dataset.tr];openItem({n:p[0],u:p[1],img:p[2],cat:"Terlaris",ds:p[3],r:p[4]})}};
@@ -908,7 +912,7 @@ $("sc").onscroll=e=>$("hdr2").classList.toggle("c",e.target.scrollTop>80);
 $("add").onclick=()=>{addCart();$("sq").textContent=qty+" x "+cur[0];$("st").textContent="IDR "+fmt(total());$("ov").classList.add("on");$("sh").classList.add("on")};
 $("ov").onclick=closeS;$("b2").onclick=()=>{closeS();show("cart")};$("b1").onclick=()=>{closeS();show(prev)};
 function fit(){const s=Math.min(1,(innerHeight-70)/740,(innerWidth-16)/360);$("phone").style.transform="scale("+s+")";$("holder").style.width=360*s+"px";$("holder").style.height=740*s+"px"}
-addEventListener("resize",fit);fit();toast();show("welcome");
+addEventListener("resize",fit);fit();initHome();toast();show("home");
 </script>
 </body>
 </html>
