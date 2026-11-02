@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Awake Admin - Complete Management</title>
+<title>Awake Admin - Products & Multi Image Upload</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--pg:#f4f6f0;--tx:#1a1a1a;--sub:#707670;--green:#2e7d32;--red:#dc1f26;--blue:#1976d2;--border:#e0e4dc;--card:#fff}
@@ -36,10 +36,14 @@ button.btn.danger{background:var(--red)}
 button.btn.blue{background:var(--blue)}
 button.btn.secondary{background:#eef2ea;color:var(--tx)}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:1000;display:none}
-.modal-content{background:#fff;width:100%;max-width:500px;border-radius:20px;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,.2)}
+.modal-content{background:#fff;width:100%;max-width:540px;border-radius:20px;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,.2);max-height:90vh;overflow-y:auto}
 .form-group{margin-bottom:14px}
 .form-group label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--sub)}
-.form-group input, .form-group select{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-size:14px;outline:none}
+.form-group input, .form-group select, .form-group textarea{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-size:14px;outline:none}
+.dropzone{border:2px dashed var(--border);border-radius:12px;padding:20px;text-align:center;background:#fcfdfa;cursor:pointer;position:relative}
+.dropzone input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.preview-grid{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.preview-item{width:64px;height:64px;border-radius:8px;object-fit:cover;border:1px solid var(--border)}
 .toast{position:fixed;bottom:24px;right:24px;background:#1a1a1a;color:#fff;padding:12px 20px;border-radius:12px;font-weight:600;box-shadow:0 6px 20px rgba(0,0,0,.2);display:none;z-index:2000}
 </style>
 </head>
@@ -47,13 +51,13 @@ button.btn.secondary{background:#eef2ea;color:var(--tx)}
 <header>
   <div class="logo">
     <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--green)"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-    Awake Admin - Complete CRUD
+    Awake Admin - Product & Media Management
   </div>
   <div class="nav-tabs">
     <button class="on" onclick="switchTab('orders')">Orders</button>
     <button onclick="switchTab('topup')">Top Up</button>
-    <button onclick="switchTab('products')">Products CRUD</button>
-    <button onclick="switchTab('drivers')">Drivers CRUD</button>
+    <button onclick="switchTab('products')">Products & Images</button>
+    <button onclick="switchTab('drivers')">Drivers</button>
   </div>
 </header>
 
@@ -81,7 +85,7 @@ button.btn.secondary{background:#eef2ea;color:var(--tx)}
     <div id="modal-body"></div>
     <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:20px">
       <button class="btn secondary" onclick="closeModal()">Cancel</button>
-      <button class="btn" id="modal-save" onclick="saveModalData()">Save</button>
+      <button class="btn" id="modal-save" onclick="saveModalData()">Save Product</button>
     </div>
   </div>
 </div>
@@ -90,7 +94,7 @@ button.btn.secondary{background:#eef2ea;color:var(--tx)}
 
 <script>
 const SK="awake_ui_v2";
-let db={orders:[], txs:[], wallet:0, products:[], drivers:[{id:1,name:"Budi Santoso",phone:"08123456789",plat:"D 1234 ABC"},{id:2,name:"Joko Widodo",phone:"08987654321",plat:"D 5678 XYZ"}]};
+let db={orders:[], txs:[], wallet:0, products:[], drivers:[{id:1,name:"Budi Santoso",phone:"08123456789",plat:"D 1234 ABC"}]};
 
 function loadData(){
   try{
@@ -100,9 +104,8 @@ function loadData(){
       db.txs=d.txs||[];
       db.wallet=d.wallet||0;
       db.products=d.products||[
-        {id:1,name:"Beras Premium 5kg",u:72000,cat:"Beras",stock:50},
-        {id:2,name:"Minyak Goreng 1L",u:18000,cat:"Minyak",stock:40},
-        {id:3,name:"Gula Pasir 1kg",u:16000,cat:"Bumbu",stock:60}
+        {id:1, name:"Beras Premium 5kg", cat:"Beras", u:72000, stock:50, img:"red", desc:"Bahan pokok harian berkualitas tinggi."},
+        {id:2, name:"Minyak Goreng 1L", cat:"Minyak", u:18000, stock:40, img:"minyak", desc:"Minyak goreng kelapa sawit jernih."}
       ];
       db.drivers=d.drivers||db.drivers;
     }
@@ -148,7 +151,6 @@ function render(){
 
   if(currentTab=="orders"){
     document.getElementById("table-title").textContent="All Customer Orders";
-    headerAction.innerHTML=`<button class="btn blue" onclick="openOrderModal()">+ Create Order</button>`;
     if(!db.orders.length){
       document.getElementById("table-content").innerHTML=`<div style="padding:40px;text-align:center;color:var(--sub)">No orders found</div>`;
       return;
@@ -166,8 +168,6 @@ function render(){
           ${o.st=='pending'?`<button class="btn" onclick="updateOrderStatus(${idx}, 'preparing')">Approve</button> <button class="btn danger" onclick="updateOrderStatus(${idx}, 'cancelled')">Cancel</button>`:''}
           ${o.st=='preparing'?`<button class="btn" onclick="updateOrderStatus(${idx}, 'in delivery')">Deliver</button>`:''}
           ${o.st=='in delivery'?`<button class="btn" onclick="updateOrderStatus(${idx}, 'finished')">Complete</button>`:''}
-          <button class="btn secondary" onclick="editOrder(${idx})">Edit</button>
-          <button class="btn danger" onclick="deleteOrder(${idx})">Delete</button>
         </td>
       </tr>`;
     });
@@ -182,7 +182,7 @@ function render(){
       return;
     }
     let html=`<table><thead><tr><th>Date</th><th>Amount</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
-    tu.forEach((t, i)=>{
+    tu.forEach((t)=>{
       const realIdx=db.txs.findIndex(x=>x==t);
       html+=`<tr>
         <td>${t.date} ${t.time}</td>
@@ -190,7 +190,6 @@ function render(){
         <td><span class="badge ${t.st=='done'?'finished':'pending'}">${t.st}</span></td>
         <td>
           ${t.st=='pending'?`<button class="btn" onclick="approveTopup(${realIdx})">Approve Topup</button>`:`<span style="color:var(--sub);font-size:12px">Approved</span>`}
-          <button class="btn danger" onclick="deleteTopup(${realIdx})">Delete</button>
         </td>
       </tr>`;
     });
@@ -198,21 +197,23 @@ function render(){
     document.getElementById("table-content").innerHTML=html;
 
   } else if(currentTab=="products"){
-    document.getElementById("table-title").textContent="Product Catalog Management";
-    headerAction.innerHTML=`<button class="btn" onclick="openProductModal()">+ Add Product</button>`;
+    document.getElementById("table-title").textContent="Product Catalog & Image Management";
+    headerAction.innerHTML=`<button class="btn" onclick="openProductModal()">+ Add Product with Images</button>`;
     if(!db.products.length){
       document.getElementById("table-content").innerHTML=`<div style="padding:40px;text-align:center;color:var(--sub)">No products found</div>`;
       return;
     }
-    let html=`<table><thead><tr><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Actions</th></tr></thead><tbody>`;
+    let html=`<table><thead><tr><th>Image</th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Actions</th></tr></thead><tbody>`;
     db.products.forEach((p, idx)=>{
+      const imgSrc=p.customImg||p.img||"";
       html+=`<tr>
+        <td><img src="${imgSrc.startsWith('data:')?imgSrc:'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=100'}" style="width:40px;height:40px;border-radius:8px;object-fit:cover"></td>
         <td><b>${p.name}</b></td>
         <td>${p.cat}</td>
         <td>IDR ${Number(p.u).toLocaleString('id-ID')}</td>
         <td>${p.stock||100} pcs</td>
         <td>
-          <button class="btn secondary" onclick="editProduct(${idx})">Edit</button>
+          <button class="btn secondary" onclick="editProduct(${idx})">Edit & Images</button>
           <button class="btn danger" onclick="deleteProduct(${idx})">Delete</button>
         </td>
       </tr>`;
@@ -223,20 +224,13 @@ function render(){
   } else if(currentTab=="drivers"){
     document.getElementById("table-title").textContent="Driver Management";
     headerAction.innerHTML=`<button class="btn blue" onclick="openDriverModal()">+ Add Driver</button>`;
-    if(!db.drivers.length){
-      document.getElementById("table-content").innerHTML=`<div style="padding:40px;text-align:center;color:var(--sub)">No drivers found</div>`;
-      return;
-    }
-    let html=`<table><thead><tr><th>Driver Name</th><th>Phone</th><th>Vehicle Plate</th><th>Actions</th></tr></thead><tbody>`;
+    let html=`<table><thead><tr><th>Name</th><th>Phone</th><th>Plate</th><th>Actions</th></tr></thead><tbody>`;
     db.drivers.forEach((d, idx)=>{
       html+=`<tr>
         <td><b>${d.name}</b></td>
         <td>${d.phone}</td>
         <td>${d.plat}</td>
-        <td>
-          <button class="btn secondary" onclick="editDriver(${idx})">Edit</button>
-          <button class="btn danger" onclick="deleteDriver(${idx})">Delete</button>
-        </td>
+        <td><button class="btn danger" onclick="deleteDriver(${idx})">Delete</button></td>
       </tr>`;
     });
     html+=`</tbody></table>`;
@@ -244,54 +238,60 @@ function render(){
   }
 }
 
-// Order CRUD
 function updateOrderStatus(idx, st){
   db.orders[idx].st=st;
   saveData();
   render();
 }
-function deleteOrder(idx){
-  if(confirm("Delete this order?")){
-    db.orders.splice(idx,1);
-    saveData();
-    render();
-  }
-}
-let editOrderIdx=-1;
-function openOrderModal(idx=-1){
-  editOrderIdx=idx;
-  const o=idx>=0?db.orders[idx]:{id:"#AWK0"+Math.floor(Math.random()*90000+10000),cafe:"Awake Sembako Central",st:"pending",items:[{n:"Beras Premium 5kg",u:72000,q:1}],date:"2 Nov 2026"};
-  document.getElementById("modal-title").textContent=idx>=0?"Edit Order":"Create New Order";
+
+let editProdIdx=-1;
+let uploadedImages=[];
+
+function openProductModal(idx=-1){
+  editProdIdx=idx;
+  const p=idx>=0?db.products[idx]:{name:"",cat:"Beras",u:10000,stock:50,desc:"",customImg:""};
+  uploadedImages=p.customImg?[p.customImg]:[];
+  document.getElementById("modal-title").textContent=idx>=0?"Edit Product & Upload Images":"Add New Product & Images";
   document.getElementById("modal-body").innerHTML=`
-    <div class="form-group"><label>Order ID</label><input id="f-oid" value="${o.id}"></div>
-    <div class="form-group"><label>Store / Cafe</label><input id="f-ocafe" value="${o.cafe}"></div>
-    <div class="form-group"><label>Status</label>
-      <select id="f-ost">
-        <option value="pending" ${o.st=='pending'?'selected':''}>Pending</option>
-        <option value="preparing" ${o.st=='preparing'?'selected':''}>Preparing</option>
-        <option value="in delivery" ${o.st=='in delivery'?'selected':''}>In Delivery</option>
-        <option value="finished" ${o.st=='finished'?'selected':''}>Finished</option>
-        <option value="cancelled" ${o.st=='cancelled'?'selected':''}>Cancelled</option>
+    <div class="form-group"><label>Product Name</label><input id="f-pname" value="${p.name}"></div>
+    <div class="form-group"><label>Category</label>
+      <select id="f-pcat">
+        <option value="Beras" ${p.cat=='Beras'?'selected':''}>Beras</option>
+        <option value="Minyak" ${p.cat=='Minyak'?'selected':''}>Minyak</option>
+        <option value="Bumbu" ${p.cat=='Bumbu'?'selected':''}>Bumbu</option>
+        <option value="Mie" ${p.cat=='Mie'?'selected':''}>Mie</option>
+        <option value="Paket Sembako" ${p.cat=='Paket Sembako'?'selected':''}>Paket Sembako</option>
       </select>
+    </div>
+    <div class="form-group"><label>Price (IDR)</label><input type="number" id="f-pu" value="${p.u}"></div>
+    <div class="form-group"><label>Stock</label><input type="number" id="f-pstock" value="${p.stock||100}"></div>
+    <div class="form-group"><label>Description</label><textarea id="f-pdesc" rows="2">${p.desc||''}</textarea></div>
+    <div class="form-group">
+      <label>Upload Product Images (Multi-select supported)</label>
+      <div class="dropzone">
+        <span>📁 Click or drag images here to upload</span>
+        <input type="file" multiple accept="image/*" onchange="handleImageUpload(event)">
+      </div>
+      <div class="preview-grid" id="preview-grid">
+        ${uploadedImages.map(img=>`<img src="${img}" class="preview-item">`).join('')}
+      </div>
     </div>
   `;
   document.getElementById("modal").style.display="flex";
 }
 
-// Product CRUD
-let editProdIdx=-1;
-function openProductModal(idx=-1){
-  editProdIdx=idx;
-  const p=idx>=0?db.products[idx]:{name:"",cat:"Beras",u:10000,stock:50};
-  document.getElementById("modal-title").textContent=idx>=0?"Edit Product":"Add Product";
-  document.getElementById("modal-body").innerHTML=`
-    <div class="form-group"><label>Product Name</label><input id="f-pname" value="${p.name}"></div>
-    <div class="form-group"><label>Category</label><input id="f-pcat" value="${p.cat}"></div>
-    <div class="form-group"><label>Price (IDR)</label><input type="number" id="f-pu" value="${p.u}"></div>
-    <div class="form-group"><label>Stock</label><input type="number" id="f-pstock" value="${p.stock||100}"></div>
-  `;
-  document.getElementById("modal").style.display="flex";
+function handleImageUpload(e){
+  const files=e.target.files;
+  for(let file of files){
+    const reader=new FileReader();
+    reader.onload=function(evt){
+      uploadedImages.push(evt.target.result);
+      document.getElementById("preview-grid").innerHTML=uploadedImages.map(img=>`<img src="${img}" class="preview-item">`).join('');
+    };
+    reader.readAsDataURL(file);
+  }
 }
+
 function editProduct(idx){openProductModal(idx);}
 function deleteProduct(idx){
   if(confirm("Delete product?")){
@@ -301,26 +301,20 @@ function deleteProduct(idx){
   }
 }
 
-// Driver CRUD
-let editDrvIdx=-1;
-function openDriverModal(idx=-1){
-  editDrvIdx=idx;
-  const d=idx>=0?db.drivers[idx]:{name:"",phone:"",plat:""};
-  document.getElementById("modal-title").textContent=idx>=0?"Edit Driver":"Add Driver";
-  document.getElementById("modal-body").innerHTML=`
-    <div class="form-group"><label>Driver Name</label><input id="f-dname" value="${d.name}"></div>
-    <div class="form-group"><label>Phone Number</label><input id="f-dphone" value="${d.phone}"></div>
-    <div class="form-group"><label>Vehicle Plate</label><input id="f-dplat" value="${d.plat}"></div>
-  `;
-  document.getElementById("modal").style.display="flex";
-}
-function editDriver(idx){openDriverModal(idx);}
-function deleteDriver(idx){
-  if(confirm("Delete driver?")){
-    db.drivers.splice(idx,1);
+function openDriverModal(){
+  const name=prompt("Driver Name:");
+  const phone=prompt("Phone:");
+  const plat=prompt("Vehicle Plate:");
+  if(name && phone){
+    db.drivers.push({name, phone, plat});
     saveData();
     render();
   }
+}
+function deleteDriver(idx){
+  db.drivers.splice(idx,1);
+  saveData();
+  render();
 }
 
 function closeModal(){
@@ -328,35 +322,17 @@ function closeModal(){
 }
 
 function saveModalData(){
-  if(currentTab=="orders"){
-    const id=document.getElementById("f-oid").value;
-    const cafe=document.getElementById("f-ocafe").value;
-    const st=document.getElementById("f-ost").value;
-    if(editOrderIdx>=0){
-      db.orders[editOrderIdx].id=id;
-      db.orders[editOrderIdx].cafe=cafe;
-      db.orders[editOrderIdx].st=st;
-    } else {
-      db.orders.unshift({id, cafe, st, items:[{n:"Beras Premium 5kg",u:72000,q:2}], date:"2 Nov 2026"});
-    }
-  } else if(currentTab=="products"){
+  if(currentTab=="products"){
     const name=document.getElementById("f-pname").value;
     const cat=document.getElementById("f-pcat").value;
     const u=Number(document.getElementById("f-pu").value);
     const stock=Number(document.getElementById("f-pstock").value);
+    const desc=document.getElementById("f-pdesc").value;
+    const customImg=uploadedImages.length?uploadedImages[0]:"";
     if(editProdIdx>=0){
-      db.products[editProdIdx]={name, cat, u, stock};
+      db.products[editProdIdx]={...db.products[editProdIdx], name, cat, u, stock, desc, customImg};
     } else {
-      db.products.push({name, cat, u, stock});
-    }
-  } else if(currentTab=="drivers"){
-    const name=document.getElementById("f-dname").value;
-    const phone=document.getElementById("f-dphone").value;
-    const plat=document.getElementById("f-dplat").value;
-    if(editDrvIdx>=0){
-      db.drivers[editDrvIdx]={name, phone, plat};
-    } else {
-      db.drivers.push({name, phone, plat});
+      db.products.push({name, cat, u, stock, desc, customImg, img:"red"});
     }
   }
   saveData();
@@ -367,11 +343,6 @@ function saveModalData(){
 function approveTopup(idx){
   db.txs[idx].st="done";
   db.wallet+=(db.txs[idx].amt||0);
-  saveData();
-  render();
-}
-function deleteTopup(idx){
-  db.txs.splice(idx,1);
   saveData();
   render();
 }
