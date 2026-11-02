@@ -673,9 +673,9 @@ Object.assign(CT,{Jakarta:{img:"jakarta",t:"13.50",c:[["Awake Sembako Central","
 Object.assign(CF2,{"Awake Sembako Central":{city:"Jakarta",open:1,t:"13.50",ph:"dgph",idx:0,ab:"Toko sembako pusat di Jakarta, lengkap untuk kebutuhan keluarga.",fa:["wifi","ac","parking","toilet"],m:"Awake Team"},"Awake Sembako Senayan":{city:"Jakarta",open:1,t:"13.50",ph:"ubph",idx:0,ab:"Toko sembako modern di Senayan untuk belanja cepat.",fa:["wifi","power","parking","toilet"],m:"Awake Team"}});
 CAFES["Awake Sembako Senayan"]={city:"Jakarta",open:1};CF.push("Awake Sembako Senayan");
 const _oc=openCity;openCity=function(n){_oc(n);$("cth").style.filter=(n=="Jakarta"||n=="Makassar")?"blur(1.5px)":"";$("cth").style.transform=(n=="Jakarta"||n=="Makassar")?"scale(1.06)":"";if(!CT[n].c.length)$("ctc").innerHTML=emp("No stores yet","We\u2019re opening soon in this city")};
-P.nonc=[["Gula Pasir 1kg",15000,"gula",D2],["Garam Dapur 500g",6000,"gula",D2]];
-$("g-nonc").innerHTML=P.nonc.map((p,i)=>`<div class="it" data-i="${i}"><img class="im" src="${IMGP[p[2]]}" alt=""><div class="card"><b>${p[0]}</b><i>Minyak & Gula</i><em>Rp ${fmt(p[1])}</em></div></div>`).join("");
-$("g-nonc").onclick=e=>{const c=e.target.closest(".it");if(c)openD(P.nonc[c.dataset.i])};
+const noncProds=[["Gula Pasir 1kg",15000,"gula",D2],["Garam Dapur 500g",6000,"gula",D2]];
+$("g-nonc").innerHTML=noncProds.map((p,i)=>`<div class="it" data-k="nonc" data-i="${i}"><img class="im" src="${IMGP[p[2]]}" alt=""><div class="card"><b>${p[0]}</b><i>Minyak & Gula</i><em>Rp ${fmt(p[1])}</em></div></div>`).join("");
+$("g-nonc").onclick=e=>{const c=e.target.closest(".it");if(c)openD(noncProds[+c.dataset.i])};
 document.querySelectorAll("[data-bp]").forEach(b=>b.onclick=()=>show("profile"));["epbk","cwbk","abk","fvbk","nbk","hbk"].forEach(i=>$(i).onclick=()=>show("profile"));
 document.addEventListener("click",e=>{const ey=e.target.closest(".eye");if(ey&&ey.dataset.ee){const i=$(ey.dataset.ee);i.type=i.type=="password"?"text":"password"}});
 /* sign in */
