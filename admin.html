@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Awake Sembako - Admin Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--pg:#f4f6f0;--tx:#1a1a1a;--sub:#707670;--green:#2e7d32;--red:#dc1f26;--blue:#1976d2;--border:#e0e4dc;--card:#fff}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:var(--pg);color:var(--tx);font-family:'Plus Jakarta Sans',system-ui,sans-serif;margin:0;padding:0;min-height:100vh}
+header{background:#fff;border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{font-weight:800;font-size:18px;color:var(--green);display:flex;align-items:center;gap:8px}
+.nav-tabs{display:flex;gap:8px;background:#eef2ea;padding:4px;border-radius:12px}
+.nav-tabs button{border:0;background:transparent;padding:8px 16px;border-radius:8px;font-weight:600;font-size:13px;color:var(--sub);cursor:pointer;transition:.2s}
+.nav-tabs button.on{background:#fff;color:var(--tx);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.main{max-width:1100px;margin:24px auto;padding:0 16px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+.card small{color:var(--sub);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+.card .val{font-size:28px;font-weight:800;color:var(--tx);margin-top:6px}
+.table-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+.table-header{padding:16px 20px;border-bottom:1px solid var(--border);font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:between}
+table{width:100%;border-collapse:collapse;text-align:left;font-size:14px}
+th{background:#f9fbf7;color:var(--sub);font-weight:600;padding:12px 16px;border-bottom:1px solid var(--border)}
+td{padding:14px 16px;border-bottom:1px solid var(--border);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+.badge{display:inline-flex;align-items:center;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700}
+.badge.pending{background:#fff3cd;color:#856404}
+.badge.preparing{background:#cce5ff;color:#004085}
+.badge.delivery{background:#d4edda;color:#155724}
+.badge.finished{background:#d1e7dd;color:#0f5132}
+.badge.cancelled{background:#f8d7da;color:#721c24}
+button.btn{background:var(--green);color:#fff;border:0;padding:6px 14px;border-radius:8px;font-weight:600;font-size:12px;cursor:pointer}
+button.btn.danger{background:var(--red)}
+button.btn.secondary{background:#eef2ea;color:var(--tx)}
+.toast{position:fixed;bottom:24px;right:24px;background:#1a1a1a;color:#fff;padding:12px 20px;border-radius:12px;font-weight:600;box-shadow:0 6px 20px rgba(0,0,0,.2);display:none;z-index:1000}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--green)"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+    Awake Admin Panel
+  </div>
+  <div class="nav-tabs">
+    <button class="on" onclick="switchTab('orders')">Orders</button>
+    <button onclick="switchTab('topup')">Top Up</button>
+    <button onclick="switchTab('stock')">Stock & Products</button>
+  </div>
+</header>
+
+<div class="main">
+  <div class="grid2">
+    <div class="card">
+      <small>Total Orders</small>
+      <div class="val" id="stat-orders">0</div>
+    </div>
+    <div class="card">
+      <small>Pending Top Up</small>
+      <div class="val" id="stat-topup" style="color:var(--red)">0</div>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <div class="table-header" id="table-title">Manage Orders</div>
+    <div id="table-content"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Saved successfully</div>
+
+<script>
+const SK="awake_ui_v2";
+let orders=[], txs=[], wallet=0, addrs=[], aid=1, favs=[], ns={}, cart=[], curCafe="Awake Sembako Central", chats={}, pr={n:"Budi Santoso",e:"budi@awake.id"};
+
+function loadData(){
+  try{
+    const d=JSON.parse(localStorage.getItem(SK)||"null");
+    if(d){
+      orders=d.orders||[];
+      txs=d.txs||[];
+      wallet=d.wallet||0;
+    }
+  }catch(e){console.error(e);}
+}
+
+function saveData(){
+  try{
+    const d=JSON.parse(localStorage.getItem(SK)||"{}");
+    d.orders=orders;
+    d.txs=txs;
+    d.wallet=wallet;
+    localStorage.setItem(SK, JSON.stringify(d));
+    showToast("Changes saved");
+  }catch(e){console.error(e);}
+}
+
+function showToast(msg){
+  const t=document.getElementById("toast");
+  t.textContent=msg;
+  t.style.display="block";
+  setTimeout(()=>t.style.display="none", 2000);
+}
+
+let currentTab="orders";
+function switchTab(t){
+  currentTab=t;
+  document.querySelectorAll(".nav-tabs button").forEach(b=>b.classList.toggle("on", b.textContent.toLowerCase().includes(t)));
+  render();
+}
+
+function render(){
+  loadData();
+  document.getElementById("stat-orders").textContent=orders.length;
+  document.getElementById("stat-topup").textContent=txs.filter(t=>t.k=="topup"&&t.st=="pending").length;
+
+  if(currentTab=="orders"){
+    document.getElementById("table-title").textContent="All Customer Orders";
+    if(!orders.length){
+      document.getElementById("table-content").innerHTML=`<div style="padding:40px;text-align:center;color:var(--sub)">No orders found</div>`;
+      return;
+    }
+    let html=`<table><thead><tr><th>Order ID</th><th>Cafe</th><th>Status</th><th>Total</th><th>Date</th><th>Actions</th></tr></thead><tbody>`;
+    orders.forEach((o, idx)=>{
+      const tot=(o.items||[]).reduce((a,c)=>a+c.u*c.q,0)+3000;
+      html+=`<tr>
+        <td><b>${o.id}</b></td>
+        <td>${o.cafe||'-'}</td>
+        <td><span class="badge ${o.st=='in delivery'?'delivery':o.st}">${o.st}</span></td>
+        <td>IDR ${tot.toLocaleString('id-ID')}</td>
+        <td>${o.date||'-'}</td>
+        <td>
+          ${o.st=='pending'?`<button class="btn" onclick="updateStatus(${idx}, 'preparing')">Approve</button> <button class="btn danger" onclick="updateStatus(${idx}, 'cancelled')">Cancel</button>`:''}
+          ${o.st=='preparing'?`<button class="btn" onclick="updateStatus(${idx}, 'in delivery')">Deliver</button>`:''}
+          ${o.st=='in delivery'?`<button class="btn" onclick="updateStatus(${idx}, 'finished')">Complete</button>`:''}
+          ${o.st=='finished'||o.st=='cancelled'?`<span style="color:var(--sub);font-size:12px">Done</span>`:''}
+        </td>
+      </tr>`;
+    });
+    html+=`</tbody></table>`;
+    document.getElementById("table-content").innerHTML=html;
+  } else if(currentTab=="topup"){
+    document.getElementById("table-title").textContent="Wallet Top Up Requests";
+    const tu=txs.filter(t=>t.k=="topup");
+    if(!tu.length){
+      document.getElementById("table-content").innerHTML=`<div style="padding:40px;text-align:center;color:var(--sub)">No top up requests</div>`;
+      return;
+    }
+    let html=`<table><thead><tr><th>Date</th><th>Amount</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
+    tu.forEach((t, i)=>{
+      const realIdx=txs.findIndex(x=>x==t);
+      html+=`<tr>
+        <td>${t.date} ${t.time}</td>
+        <td><b>IDR ${(t.amt||0).toLocaleString('id-ID')}</b></td>
+        <td><span class="badge ${t.st=='done'?'finished':'pending'}">${t.st}</span></td>
+        <td>
+          ${t.st=='pending'?`<button class="btn" onclick="approveTopup(${realIdx})">Approve Topup</button>`:`<span style="color:var(--sub);font-size:12px">Approved</span>`}
+        </td>
+      </tr>`;
+    });
+    html+=`</tbody></table>`;
+    document.getElementById("table-content").innerHTML=html;
+  } else if(currentTab=="stock"){
+    document.getElementById("table-title").textContent="Inventory & Stock Status";
+    document.getElementById("table-content").innerHTML=`<div style="padding:30px;text-align:center;color:var(--sub)">Stock management is synchronized with main Sembako catalog. All items are active and in stock.</div>`;
+  }
+}
+
+function updateStatus(idx, st){
+  orders[idx].st=st;
+  saveData();
+  render();
+}
+
+function approveTopup(idx){
+  txs[idx].st="done";
+  wallet+=(txs[idx].amt||0);
+  saveData();
+  render();
+}
+
+render();
+window.addEventListener('storage', render);
+</script>
+</body>
+</html>
